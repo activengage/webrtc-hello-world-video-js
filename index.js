@@ -33,15 +33,22 @@ app.get("/joinCall", async (req, res) => {
     let sessionName = req.query.room_id;
     let sessionId;
 
+
+    console.log(
+      `starting join call...`
+    );
+
     // create the session or get it from the global map
     if (sessions.has(sessionName)) {
       sessionId = sessions.get(sessionName);
     } else {
+
       let sessionBody = new BandwidthWebRTC.Session({ tag: `demo` });
       let sessionResponse = await webRTCController.createSession(
         accountId,
         sessionBody
       );
+
       sessionId = sessionResponse.id;
       sessions.set(sessionName, sessionId);
     }
